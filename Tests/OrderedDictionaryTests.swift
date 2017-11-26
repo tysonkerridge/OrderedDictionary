@@ -239,7 +239,55 @@ class OrderedDictionaryTests: XCTestCase {
         let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
         XCTAssertNil(orderedDictionary.elementAt(42))
     }
-    
+
+    // ======================================================= //
+    // MARK: - Binary Search Inserting
+    // ======================================================= //
+
+    /// Key-Value Pair of a String and Int.
+    private typealias BinarySearchStringIntKVP = (key: String, value: Int)
+
+    func testBinarySearchInsertionsInIncreasingOrder() {
+
+        let increasingOrder: (BinarySearchStringIntKVP, BinarySearchStringIntKVP) -> Bool = { left, right in
+            return left.value < right.value
+        }
+
+        var orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "C": 3]
+        orderedDictionary.insert((key: "D", value: 4), inOrderUsing: increasingOrder)
+        orderedDictionary.insert((key: "E", value: 5), inOrderUsing: increasingOrder)
+        orderedDictionary.insert((key: "B", value: 2), inOrderUsing: increasingOrder)
+
+        let expected: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3, "D": 4, "E": 5]
+        let actual = orderedDictionary
+
+        XCTAssertTrue(expected == actual)
+    }
+
+    func testBinarySearchInsertionsInDecreasingOrder() {
+
+        let decreasingOrder: (BinarySearchStringIntKVP, BinarySearchStringIntKVP) -> Bool = { left, right in
+            return left.value > right.value
+        }
+
+        var orderedDictionary: OrderedDictionary<String, Int> = ["C": 3, "A": 1]
+        orderedDictionary.insert((key: "D", value: 4), inOrderUsing: decreasingOrder)
+        orderedDictionary.insert((key: "E", value: 5), inOrderUsing: decreasingOrder)
+        orderedDictionary.insert((key: "B", value: 2), inOrderUsing: decreasingOrder)
+
+        let expected: OrderedDictionary<String, Int> = ["E": 5, "D": 4, "C": 3, "B": 2, "A": 1]
+        let actual = orderedDictionary
+
+        XCTAssertTrue(expected == actual)
+    }
+
+    func testBinarySearchInsertionsWithDuplicateKeys() {
+        let orderedDictionary: OrderedDictionary<String, Int> = ["A": 1, "B": 2, "C": 3]
+        let invalidElement = (key: "A", value: 42)
+
+        XCTAssertFalse(orderedDictionary.canInsert(invalidElement))
+    }
+
     // ======================================================= //
     // MARK: - Content Removal
     // ======================================================= //
