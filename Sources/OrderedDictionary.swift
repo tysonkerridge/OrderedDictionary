@@ -65,12 +65,12 @@ public struct OrderedDictionary<Key: Hashable, Value>: BidirectionalCollection {
     // ======================================================= //
     
     /// A collection containing just the keys of the ordered dictionary in the correct order.
-    public var orderedKeys: LazyMapBidirectionalCollection<OrderedDictionary<Key, Value>, Key> {
+    public var orderedKeys: LazyMapCollection<OrderedDictionary<Key, Value>, Key> {
         return self.lazy.map { $0.key }
     }
     
     /// A collection containing just the values of the ordered dictionary in the correct order.
-    public var orderedValues: LazyMapBidirectionalCollection<OrderedDictionary<Key, Value>, Value> {
+    public var orderedValues: LazyMapCollection<OrderedDictionary<Key, Value>, Value> {
         return self.lazy.map { $0.value }
     }
     

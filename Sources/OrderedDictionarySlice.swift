@@ -18,7 +18,7 @@ public struct OrderedDictionarySlice<Key: Hashable, Value>: BidirectionalCollect
     public typealias Index = Base.Index
     
     /// The type of the indices collection of the slice.
-    public typealias Indices = BidirectionalSlice<Base>.Indices
+    public typealias Indices = Slice<Base>.Indices
     
     /// The type of the contiguous subrange of the ordered dictionary's slice.
     public typealias SubSequence = OrderedDictionarySlice<Key, Value>
@@ -33,7 +33,7 @@ public struct OrderedDictionarySlice<Key: Hashable, Value>: BidirectionalCollect
     /// - Parameter base: The ordered dictionary to create a view into.
     /// - Parameter bounds: The range of indices to allow access to in the new slice.
     internal init(base: Base, bounds: Range<Index>) {
-        self._slice = BidirectionalSlice(base: base, bounds: bounds)
+        self._slice = Slice(base: base, bounds: bounds)
     }
     
     // ======================================================= //
@@ -76,6 +76,6 @@ public struct OrderedDictionarySlice<Key: Hashable, Value>: BidirectionalCollect
     // ======================================================= //
     
     /// The underlying slice value.
-    private var _slice: BidirectionalSlice<Base>
+    private var _slice: Slice<Base>
     
 }
